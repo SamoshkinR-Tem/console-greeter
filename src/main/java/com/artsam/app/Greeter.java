@@ -1,5 +1,7 @@
 package com.artsam.app;
 
+import com.artsam.app.tools.MyBundleControl;
+
 import java.time.Clock;
 import java.time.LocalTime;
 import java.util.Locale;
@@ -8,11 +10,11 @@ import java.util.logging.Logger;
 
 class Greeter {
 
-    private static final int DEFAULT = -1;
-    private static final int MORNING = 0;
-    private static final int DAY = 1;
-    private static final int EVENING = 2;
-    private static final int NIGHT = 3;
+    public static final int DEFAULT = -1;
+    public static final int MORNING = 0;
+    public static final int DAY = 1;
+    public static final int EVENING = 2;
+    public static final int NIGHT = 3;
 
     private static final LocalTime SIX = LocalTime.parse("06:00:00");
     private static final LocalTime NINE = LocalTime.parse("09:00:00");
@@ -21,7 +23,7 @@ class Greeter {
 
     private static Logger log = Logger.getLogger(App.class.getName());
 
-    public void greet(){
+    public void greet() {
         int period = determineInterval();
 
         String greetingText = getRightSentence(period);
@@ -53,7 +55,8 @@ class Greeter {
 
     public String getRightSentence(int period) {
         // new Locale("en", "US")   if You want english language
-        ResourceBundle bundle = ResourceBundle.getBundle("Bundle", Locale.getDefault());
+        ResourceBundle bundle = ResourceBundle.getBundle(
+                "Bundle", Locale.getDefault(), new MyBundleControl());
         switch (period) {
             case MORNING:
                 return bundle.getString("app.good_morning");
