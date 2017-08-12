@@ -10,10 +10,15 @@ import java.security.AccessController;
 import java.security.PrivilegedActionException;
 import java.security.PrivilegedExceptionAction;
 import java.util.*;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class MyBundleControl extends ResourceBundle.Control {
-    private static final Logger log = Logger.getLogger(MyBundleControl.class.getName());
+    private MyLogger logger = new MyLogger(MyBundleControl.class.getName());
+
+    public MyBundleControl() {
+        logger.setShowInConsole(false);
+    }
 
     @Override
     public ResourceBundle newBundle(String baseName, Locale locale,
@@ -60,7 +65,7 @@ public class MyBundleControl extends ResourceBundle.Control {
                     Enumeration<String> e = bundle.getKeys();
                     while (e.hasMoreElements()){
                         String key = e.nextElement();
-                        log.info("Key:"+ key+" value:"+bundle.getString(key));
+//                        logger.log(Level.INFO,"newBundle()","Key:"+ key+" value:"+bundle.getString(key));
                     }
                 } finally {
                     stream.close();

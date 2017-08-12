@@ -1,11 +1,13 @@
 package com.artsam.app;
 
+import com.artsam.app.tools.MyLogger;
 import com.artsam.app.tools.MyBundleControl;
 
 import java.time.Clock;
 import java.time.LocalTime;
 import java.util.Locale;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 class Greeter {
@@ -21,17 +23,21 @@ class Greeter {
     private static final LocalTime SEVENTEEN = LocalTime.parse("19:00:00");
     private static final LocalTime TWENTY_THREE = LocalTime.parse("23:00:00");
 
-    private static Logger log = Logger.getLogger(App.class.getName());
+    private MyLogger logger = new MyLogger(this.getClass().getName());
 
     public void greet() {
+        logger.setShowInConsole(false);
+        logger.log(Level.INFO, "greet()");
         int period = determineInterval();
-
+        logger.log(Level.INFO, "greet()","period value: " + String.valueOf(period));
         String greetingText = getRightSentence(period);
-
+        logger.log(Level.INFO, "greet()", "greetingText value: " + greetingText);
         displayValue(greetingText);
+        logger.log(Level.INFO, "greet()","Done");
     }
 
     public int determineInterval() {
+        logger.log(Level.INFO, "determineInterval()");
         LocalTime nowUtcTime = LocalTime.now(Clock.systemUTC());
         if (nowUtcTime.equals(SIX) ||
                 nowUtcTime.isAfter(SIX) &&
@@ -54,6 +60,7 @@ class Greeter {
     }
 
     public String getRightSentence(int period) {
+        logger.log(Level.INFO, "getRightSentence()");
         // new Locale("en", "US")   if You want english language
         ResourceBundle bundle = ResourceBundle.getBundle(
                 "Bundle", Locale.getDefault(), new MyBundleControl());
