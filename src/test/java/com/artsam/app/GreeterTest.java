@@ -4,6 +4,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import java.util.Locale;
+import java.util.MissingResourceException;
 
 import static org.junit.Assert.assertEquals;
 
@@ -44,43 +45,47 @@ public class GreeterTest {
 
     @Test
     public void getRightSentence() {
-        String greetText = new Greeter().getRightSentence(period);
-        if (Locale.getDefault().toString().matches("en_US")) {
-            switch (period) {
-                case Greeter.MORNING:
-                    assertEquals("Good morning, World!", greetText);
-                    break;
-                case Greeter.DAY:
-                    assertEquals("Good day, World!", greetText);
-                    break;
-                case Greeter.EVENING:
-                    assertEquals("Good evening, World!", greetText);
-                    break;
-                case Greeter.NIGHT:
-                    assertEquals("Good night, World!", greetText);
-                    break;
-                case Greeter.DEFAULT:
-                    assertEquals("Witch World are You from?", greetText);
-                    break;
+        try {
+            String greetText = new Greeter().getRightSentence(period);
+            if (Locale.getDefault().toString().matches("en_US")) {
+                switch (period) {
+                    case Greeter.MORNING:
+                        assertEquals("Good morning, World!", greetText);
+                        break;
+                    case Greeter.DAY:
+                        assertEquals("Good day, World!", greetText);
+                        break;
+                    case Greeter.EVENING:
+                        assertEquals("Good evening, World!", greetText);
+                        break;
+                    case Greeter.NIGHT:
+                        assertEquals("Good night, World!", greetText);
+                        break;
+                    case Greeter.DEFAULT:
+                        assertEquals("Witch World are You from?", greetText);
+                        break;
+                }
+            } else if (Locale.getDefault().toString().matches("ru_UA")) {
+                switch (period) {
+                    case Greeter.MORNING:
+                        assertEquals("Доброе утро, Мир!", greetText);
+                        break;
+                    case Greeter.DAY:
+                        assertEquals("Добрый день, Мир!", greetText);
+                        break;
+                    case Greeter.EVENING:
+                        assertEquals("Добрый вечер, Мир!", greetText);
+                        break;
+                    case Greeter.NIGHT:
+                        assertEquals("Доброй ночи, Мир!", greetText);
+                        break;
+                    case Greeter.DEFAULT:
+                        assertEquals("Вы с какой планеты?", greetText);
+                        break;
+                }
             }
-        } else if (Locale.getDefault().toString().matches("ru_UA")) {
-            switch (period) {
-                case Greeter.MORNING:
-                    assertEquals("Доброе утро, Мир!", greetText);
-                    break;
-                case Greeter.DAY:
-                    assertEquals("Добрый день, Мир!", greetText);
-                    break;
-                case Greeter.EVENING:
-                    assertEquals("Добрый вечер, Мир!", greetText);
-                    break;
-                case Greeter.NIGHT:
-                    assertEquals("Доброй ночи, Мир!", greetText);
-                    break;
-                case Greeter.DEFAULT:
-                    assertEquals("Вы с какой планеты?", greetText);
-                    break;
-            }
+        } catch (MissingResourceException e) {
+            e.printStackTrace();
         }
     }
 }
