@@ -63,10 +63,10 @@ public class MyBundleControl extends ResourceBundle.Control {
                     reader = new InputStreamReader(stream,"UTF-8");
                     bundle = new PropertyResourceBundle(reader);
                     Enumeration<String> e = bundle.getKeys();
-                    while (e.hasMoreElements()){
-                        String key = e.nextElement();
+//                    while (e.hasMoreElements()){
+//                        String key = e.nextElement();
 //                        logger.log(Level.INFO,"newBundle()","Key:"+ key+" value:"+bundle.getString(key));
-                    }
+//                    }
                 } finally {
                     stream.close();
                     if (reader != null) {
