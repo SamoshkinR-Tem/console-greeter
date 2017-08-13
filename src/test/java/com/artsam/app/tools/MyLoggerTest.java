@@ -8,12 +8,10 @@ import java.util.logging.Level;
 public class MyLoggerTest {
 
     MyLogger ml;
-    String logFileName;
-    boolean append = false;
+    String logFileName = "logTestTmp.xml";
 
     @Before
     public void createInst() {
-        logFileName = "logTestTmp.xml";
         ml = MyLogger.getInstanceOf();
         ml.setLogFileName(logFileName);
         ml.setAppend(false);
@@ -52,5 +50,15 @@ public class MyLoggerTest {
     @Test
     public void log7() throws Exception {
         ml.log(Level.OFF, "test OFF", null);
+    }
+
+    @Test
+    public void log8() throws Exception {
+        ml.log(Level.WARNING, "test WARNING", null);
+    }
+
+    @Test
+    public void log9() throws Exception {
+        ml.log(Level.INFO, "test INFO", null);
     }
 }

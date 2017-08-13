@@ -1,13 +1,11 @@
 package com.artsam.app;
 
-import com.artsam.app.tools.MyLogger;
 import com.artsam.app.tools.MyBundleControl;
 
 import java.time.Clock;
 import java.time.LocalTime;
 import java.util.Locale;
 import java.util.ResourceBundle;
-import java.util.logging.Level;
 
 class Greeter {
 
@@ -28,7 +26,7 @@ class Greeter {
         int period = determineInterval();
         App.logger.log("current period: " + period);
         String greetingText = getRightSentence(period);
-        App.logger.log("current text: " + greetingText);
+        App.logger.log("text: " + greetingText+" just shown");
         displayValue(greetingText);
     }
 
@@ -75,7 +73,7 @@ class Greeter {
     }
 
     public void displayValue(String message) {
-        App.logger.log("Job done!");
         System.out.println(message);
+        App.logger.log("Job done!");
     }
 }

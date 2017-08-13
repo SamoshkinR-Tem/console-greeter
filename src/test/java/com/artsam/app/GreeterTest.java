@@ -1,10 +1,12 @@
 package com.artsam.app;
 
+import com.artsam.app.tools.MyLogger;
 import org.junit.Before;
 import org.junit.Test;
 
 import java.util.Locale;
 import java.util.MissingResourceException;
+import java.util.logging.Level;
 
 import static org.junit.Assert.assertEquals;
 
@@ -25,23 +27,22 @@ public class GreeterTest {
     public void determineInterval() {
         switch (period) {
             case Greeter.MORNING:
-                assertEquals(0, period);
+                assertEquals(Greeter.MORNING, period);
                 break;
             case Greeter.DAY:
-                assertEquals(1, period);
+                assertEquals(Greeter.DAY, period);
                 break;
             case Greeter.EVENING:
-                assertEquals(2, period);
+                assertEquals(Greeter.EVENING, period);
                 break;
             case Greeter.NIGHT:
-                assertEquals(3, period);
+                assertEquals(Greeter.NIGHT, period);
                 break;
             case Greeter.DEFAULT:
-                assertEquals(-1, period);
+                assertEquals(Greeter.DEFAULT, period);
                 break;
         }
     }
-
 
     @Test
     public void getRightSentence() {
@@ -84,8 +85,9 @@ public class GreeterTest {
                         break;
                 }
             }
-        } catch (MissingResourceException e) {
-            e.printStackTrace();
+        } catch (Exception e) {
+            MyLogger.getInstanceOf().log(Level.WARNING,
+                    "MissingResourceException", e);
         }
     }
 }

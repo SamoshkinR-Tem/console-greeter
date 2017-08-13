@@ -15,7 +15,7 @@ public class App {
         logger.setLevel(Level.INFO);
         logger.setAppend(true);
         logger.setShowInConsole(false);
-        logger.log();
+        logger.log("Job Started");
         new Greeter().greet();
     }
 }
