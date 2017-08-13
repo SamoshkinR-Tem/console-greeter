@@ -60,9 +60,9 @@ class Greeter {
 
     public String getRightSentence(int period) {
         logger.log(Level.INFO, "getRightSentence()");
-        // new Locale("en", "US")   if You want english language
+//        Locale.setDefault(new Locale("en", "US")); // if You want to try eng lang
         ResourceBundle bundle = ResourceBundle.getBundle(
-                "Bundle", new Locale("en", "US"), new MyBundleControl());
+                "Bundle", Locale.getDefault(), new MyBundleControl());
         switch (period) {
             case MORNING:
                 return bundle.getString("app.good_morning");
