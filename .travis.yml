@@ -1,6 +1,4 @@
 language: java
 sudo: enabled
-
 script: 
-   - sudo mvn clean package
-   - sudo mvn install
+  - sudo /usr/local/maven/bin/mvn clean package
