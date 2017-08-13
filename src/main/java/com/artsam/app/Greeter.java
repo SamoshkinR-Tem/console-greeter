@@ -3,6 +3,10 @@ package com.artsam.app;
 import com.artsam.app.tools.MyLogger;
 import com.artsam.app.tools.MyBundleControl;
 
+import java.io.File;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.net.URLClassLoader;
 import java.time.Clock;
 import java.time.LocalTime;
 import java.util.Locale;
@@ -60,9 +64,17 @@ class Greeter {
 
     public String getRightSentence(int period) {
         logger.log(Level.INFO, "getRightSentence()");
+        File file = new File("bundle.properties");
+        URL[] urls = new URL[0];
+        try {
+            urls = new URL[]{file.toURI().toURL()};
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        }
+        ClassLoader loader = new URLClassLoader(urls);
 //        Locale.setDefault(new Locale("en", "US")); // if You want to try eng lang
         ResourceBundle bundle = ResourceBundle.getBundle(
-                "Bundle", Locale.getDefault(), new MyBundleControl());
+                "bundle", Locale.getDefault(), loader, new MyBundleControl());
         switch (period) {
             case MORNING:
                 return bundle.getString("app.good_morning");
