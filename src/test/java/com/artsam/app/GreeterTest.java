@@ -3,6 +3,8 @@ package com.artsam.app;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.util.Locale;
+
 import static org.junit.Assert.assertEquals;
 
 public class GreeterTest {
@@ -39,25 +41,4 @@ public class GreeterTest {
         }
     }
 
-    @Test
-    public void getRightSentence() {
-        String greetText = new Greeter().getRightSentence(period);
-        switch (period) {
-            case Greeter.MORNING:
-                assertEquals("Доброе утро, Мир!", greetText);
-                break;
-            case Greeter.DAY:
-                assertEquals("Добрый день, Мир!", greetText);
-                break;
-            case Greeter.EVENING:
-                assertEquals("Добрый вечер, Мир!", greetText);
-                break;
-            case Greeter.NIGHT:
-                assertEquals("Доброй ночи, Мир!", greetText);
-                break;
-            case Greeter.DEFAULT:
-                assertEquals("Вы с какой планеты?", greetText);
-                break;
-        }
-    }
 }
