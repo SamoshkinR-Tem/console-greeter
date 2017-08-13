@@ -64,17 +64,9 @@ class Greeter {
 
     public String getRightSentence(int period) {
         logger.log(Level.INFO, "getRightSentence()");
-        File file = new File("bundle.properties");
-        URL[] urls = new URL[0];
-        try {
-            urls = new URL[]{file.toURI().toURL()};
-        } catch (MalformedURLException e) {
-            e.printStackTrace();
-        }
-        ClassLoader loader = new URLClassLoader(urls);
 //        Locale.setDefault(new Locale("en", "US")); // if You want to try eng lang
         ResourceBundle bundle = ResourceBundle.getBundle(
-                "bundle", Locale.getDefault(), loader, new MyBundleControl());
+                "bundle", Locale.getDefault(), new MyBundleControl());
         switch (period) {
             case MORNING:
                 return bundle.getString("app.good_morning");
