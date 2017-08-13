@@ -75,7 +75,7 @@ public class MyLogger {
      * @param ex
      */
     public void log(Level level, String methodName, String msg, Exception ex) {
-        if (msg==null) {
+        if (msg == null) {
             msg = "Ok";
         }
         try {
@@ -87,8 +87,10 @@ public class MyLogger {
             logger.addHandler(fh);
             logger.setUseParentHandlers(showInConsole); // To remove the console handler, use false
             logger.log(level, msg, ex);
-        } catch (IOException | SecurityException ex1) {
+        } catch (IOException ex1) {
             logger.log(Level.SEVERE, null, ex1);
+        } catch (SecurityException e) {
+            logger.log(Level.SEVERE, null, e);
         } finally {
             if (fh != null) fh.close();
         }
