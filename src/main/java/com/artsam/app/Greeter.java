@@ -3,10 +3,6 @@ package com.artsam.app;
 import com.artsam.app.tools.MyLogger;
 import com.artsam.app.tools.MyBundleControl;
 
-import java.io.File;
-import java.net.MalformedURLException;
-import java.net.URL;
-import java.net.URLClassLoader;
 import java.time.Clock;
 import java.time.LocalTime;
 import java.util.Locale;
@@ -26,21 +22,18 @@ class Greeter {
     private static final LocalTime SEVENTEEN = LocalTime.parse("19:00:00");
     private static final LocalTime TWENTY_THREE = LocalTime.parse("23:00:00");
 
-    private MyLogger logger = new MyLogger(this.getClass().getName());
 
     public void greet() {
-        logger.setShowInConsole(false);
-        logger.log(Level.INFO, "greet()");
+        App.logger.log();
         int period = determineInterval();
-        logger.log(Level.INFO, "greet()","period value: " + String.valueOf(period));
+        App.logger.log("current period: " + period);
         String greetingText = getRightSentence(period);
-        logger.log(Level.INFO, "greet()", "greetingText value: " + greetingText);
+        App.logger.log("current text: " + greetingText);
         displayValue(greetingText);
-        logger.log(Level.INFO, "greet()","Done");
     }
 
     public int determineInterval() {
-        logger.log(Level.INFO, "determineInterval()");
+        App.logger.log();
         LocalTime nowUtcTime = LocalTime.now(Clock.systemUTC());
         if (nowUtcTime.equals(SIX) ||
                 nowUtcTime.isAfter(SIX) &&
@@ -63,7 +56,7 @@ class Greeter {
     }
 
     public String getRightSentence(int period) {
-        logger.log(Level.INFO, "getRightSentence()");
+        App.logger.log();
 //        Locale.setDefault(new Locale("en", "US")); // if You want to try eng lang
         ResourceBundle bundle = ResourceBundle.getBundle(
                 "bundle", Locale.getDefault(), new MyBundleControl());
@@ -82,6 +75,7 @@ class Greeter {
     }
 
     public void displayValue(String message) {
+        App.logger.log("Job done!");
         System.out.println(message);
     }
 }

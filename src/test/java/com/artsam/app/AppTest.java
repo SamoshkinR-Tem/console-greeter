@@ -1,5 +1,6 @@
 package com.artsam.app;
 
+import com.artsam.app.tools.MyLogger;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;

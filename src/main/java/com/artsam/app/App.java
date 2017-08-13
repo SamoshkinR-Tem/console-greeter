@@ -9,12 +9,13 @@ import java.util.logging.Level;
  */
 public class App {
 
-    public static MyLogger logger = new MyLogger(App.class.getName());
+    public static final MyLogger logger = MyLogger.getInstanceOf();
 
     public static void main(String[] args) {
-        logger.setAppend(false);
+        logger.setLevel(Level.INFO);
+        logger.setAppend(true);
         logger.setShowInConsole(false);
-        logger.log(Level.INFO, "main()");
+        logger.log();
         new Greeter().greet();
     }
 }
