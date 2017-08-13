@@ -1,7 +1,5 @@
 package com.artsam.app.tools;
 
-import com.artsam.app.App;
-
 import java.io.IOException;
 import java.util.logging.*;
 
