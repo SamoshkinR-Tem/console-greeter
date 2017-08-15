@@ -19,38 +19,39 @@ class Greeter {
     private static final LocalTime NINE = LocalTime.parse("09:00:00");
     private static final LocalTime SEVENTEEN = LocalTime.parse("19:00:00");
     private static final LocalTime TWENTY_THREE = LocalTime.parse("23:00:00");
+    private static final LocalTime MIDNIGHT = LocalTime.parse("00:00:00");
 
 
     public void greet() {
         App.logger.log();
-        int period = determineInterval();
+        LocalTime nowUtcTime = LocalTime.now(Clock.systemUTC());
+        int period = determineInterval(nowUtcTime);
         App.logger.log("current period: " + period);
         String greetingText = getRightSentence(period);
-        App.logger.log("text: " + greetingText+" just shown");
+        App.logger.log("text: " + greetingText + " just shown");
         displayValue(greetingText);
     }
 
-    public int determineInterval() {
-        App.logger.log();
-        LocalTime nowUtcTime = LocalTime.now(Clock.systemUTC());
+    public int determineInterval(LocalTime nowUtcTime) {
+        int period = DEFAULT;
         if (nowUtcTime.equals(SIX) ||
                 nowUtcTime.isAfter(SIX) &&
                         nowUtcTime.isBefore(NINE)) {
-            return MORNING;
+            period = MORNING;
         } else if (nowUtcTime.equals(NINE) ||
                 nowUtcTime.isAfter(NINE) &&
                         nowUtcTime.isBefore(SEVENTEEN)) {
-            return DAY;
+            period = DAY;
         } else if (nowUtcTime.equals(SEVENTEEN) ||
                 nowUtcTime.isAfter(SEVENTEEN) &&
                         nowUtcTime.isBefore(TWENTY_THREE)) {
-            return EVENING;
+            period = EVENING;
         } else if (nowUtcTime.equals(TWENTY_THREE) ||
-                nowUtcTime.isAfter(TWENTY_THREE) &&
-                        nowUtcTime.isBefore(SIX)) {
-            return NIGHT;
+                (nowUtcTime.isAfter(TWENTY_THREE)) ||
+                nowUtcTime.isBefore(SIX)) {
+            period = NIGHT;
         }
-        return DEFAULT;
+        return period;
     }
 
     public String getRightSentence(int period) {

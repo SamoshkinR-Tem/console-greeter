@@ -4,8 +4,10 @@ import com.artsam.app.tools.MyLogger;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.time.Clock;
+import java.time.LocalTime;
+import java.time.format.DateTimeParseException;
 import java.util.Locale;
-import java.util.MissingResourceException;
 import java.util.logging.Level;
 
 import static org.junit.Assert.assertEquals;
@@ -20,28 +22,31 @@ public class GreeterTest {
     @Before
     public void executedBeforeEach() {
         Greeter greeter = new Greeter();
-        period = greeter.determineInterval();
+        LocalTime nowUtcTime = LocalTime.now(Clock.systemUTC());
+        period = greeter.determineInterval(nowUtcTime);
     }
 
     @Test
     public void determineInterval() {
-        switch (period) {
-            case Greeter.MORNING:
-                assertEquals(Greeter.MORNING, period);
-                break;
-            case Greeter.DAY:
-                assertEquals(Greeter.DAY, period);
-                break;
-            case Greeter.EVENING:
-                assertEquals(Greeter.EVENING, period);
-                break;
-            case Greeter.NIGHT:
-                assertEquals(Greeter.NIGHT, period);
-                break;
-            case Greeter.DEFAULT:
-                assertEquals(Greeter.DEFAULT, period);
-                break;
+        try {
+            testDetermination(Greeter.NIGHT, LocalTime.parse("03:00:00"));
+            testDetermination(Greeter.MORNING, LocalTime.parse("06:00:00"));
+            testDetermination(Greeter.MORNING, LocalTime.parse("07:00:00"));
+            testDetermination(Greeter.DAY, LocalTime.parse("09:00:00"));
+            testDetermination(Greeter.DAY, LocalTime.parse("11:00:00"));
+            testDetermination(Greeter.EVENING, LocalTime.parse("19:00:00"));
+            testDetermination(Greeter.EVENING, LocalTime.parse("20:00:00"));
+            testDetermination(Greeter.NIGHT, LocalTime.parse("23:00:00"));
+            testDetermination(Greeter.NIGHT, LocalTime.parse("23:30:00"));
+            testDetermination(Greeter.DEFAULT, LocalTime.parse("24:00:00"));
+        } catch (DateTimeParseException e){
+            e.printStackTrace();
         }
+    }
+
+    private void testDetermination(int expected, LocalTime time) {
+        assertEquals(expected,
+                new Greeter().determineInterval(time));
     }
 
     @Test
