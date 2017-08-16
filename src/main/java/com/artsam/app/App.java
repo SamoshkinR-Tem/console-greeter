@@ -1,21 +1,16 @@
 package com.artsam.app;
 
-import com.artsam.app.tools.MyLogger;
-
-import java.util.logging.Level;
+import org.apache.log4j.Logger;
 
 /**
  * Good ?, world!
  */
 public class App {
 
-    public static final MyLogger logger = MyLogger.getInstanceOf();
+    static final Logger logger = Logger.getLogger(App.class);
 
     public static void main(String[] args) {
-        logger.setLevel(Level.INFO);
-        logger.setAppend(true);
-        logger.setShowInConsole(false);
-        logger.log("Job Started");
+        logger.info("main(): application started");
         new Greeter().greet();
     }
 }

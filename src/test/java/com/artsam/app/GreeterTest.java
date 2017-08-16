@@ -1,18 +1,17 @@
 package com.artsam.app;
 
-import com.artsam.app.tools.MyLogger;
-import org.junit.Before;
+import org.apache.log4j.Logger;
 import org.junit.Test;
 
-import java.time.Clock;
 import java.time.LocalTime;
 import java.time.format.DateTimeParseException;
 import java.util.Locale;
-import java.util.logging.Level;
 
 import static org.junit.Assert.assertEquals;
 
 public class GreeterTest {
+
+    static final Logger logger = Logger.getLogger(GreeterTest.class);
 
     @Test
     public void determineInterval() {
@@ -27,7 +26,7 @@ public class GreeterTest {
             testDet(Greeter.NIGHT, LocalTime.parse("23:00:00"));
             testDet(Greeter.NIGHT, LocalTime.parse("23:30:00"));
             testDet(Greeter.DEFAULT, LocalTime.parse("24:00:00"));
-        } catch (DateTimeParseException e){
+        } catch (DateTimeParseException e) {
             e.printStackTrace();
         }
     }
@@ -52,8 +51,7 @@ public class GreeterTest {
             assertEquals(expected,
                     new Greeter().getGreetingSentence(period));
         } catch (Exception e) {
-            MyLogger.getInstanceOf().log(Level.WARNING,
-                    "MissingResourceException", e);
+            logger.info("MissingResourceException", e);
         }
     }
 }

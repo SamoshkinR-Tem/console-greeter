@@ -1,5 +1,6 @@
 package com.artsam.app.tools;
 
+import org.apache.log4j.Logger;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -10,17 +11,14 @@ import java.security.AccessController;
 import java.security.PrivilegedActionException;
 import java.security.PrivilegedExceptionAction;
 import java.util.*;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 public class MyBundleControl extends ResourceBundle.Control {
 
+    static final Logger logger = Logger.getLogger(MyBundleControl.class);
     @Override
     public ResourceBundle newBundle(String baseName, Locale locale,
                                     String format, ClassLoader loader, boolean reload)
             throws IllegalAccessException, InstantiationException, IOException {
-
-
 
         String bundleName = toBundleName(baseName, locale);
         ResourceBundle bundle = null;
@@ -55,12 +53,12 @@ public class MyBundleControl extends ResourceBundle.Control {
             if (stream != null) {
                 InputStreamReader reader = null;
                 try {
-                    reader = new InputStreamReader(stream,"UTF-8");
+                    reader = new InputStreamReader(stream, "UTF-8");
                     bundle = new PropertyResourceBundle(reader);
                     Enumeration<String> e = bundle.getKeys();
 //                    while (e.hasMoreElements()){
 //                        String key = e.nextElement();
-//                        App.logger.log(Level.INFO,"newBundle()","Key:"+ key+" value:"+bundle.getString(key));
+//                        logger.debug("newBundle() Key:"+ key+" value:"+bundle.getString(key));
 //                    }
                 } finally {
                     stream.close();
@@ -74,7 +72,6 @@ public class MyBundleControl extends ResourceBundle.Control {
         }
         return bundle;
     }
-
 
     @Override
     public List<String> getFormats(String baseName) {
